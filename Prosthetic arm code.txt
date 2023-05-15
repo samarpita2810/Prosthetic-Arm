@@ -1,0 +1,28 @@
+#include <Servo.h>
+
+const int musclePin = A0;
+const int servo1Pin = 9;
+const int servo2Pin = 10;
+
+Servo servo1;
+Servo servo2;
+
+void setup() {
+  pinMode(musclePin, INPUT);
+  servo1.attach(servo1Pin);
+  servo2.attach(servo2Pin);
+}
+
+void loop() {
+  // Read the value from the muscle sensor
+  int muscleValue = analogRead(musclePin);
+
+  // Map the muscle sensor value to a range of 0-180 degrees
+  int servoValue = map(muscleValue, 0, 1023, 0, 180);
+
+  // Control the servo motors based on the mapped muscle sensor value
+  servo1.write(servoValue);
+  servo2.write(180 - servoValue); // Inverse movement for servo2
+
+  delay(10); // Small delay for stability
+}
